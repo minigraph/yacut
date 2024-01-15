@@ -40,6 +40,6 @@ def add_link():
 
     data_result = {
         'url': data['url'],
-        'short_link': url_for('link_view', short=short_id, _external=True),
+        'short_link': url_for(link_view.__name__, short=short_id, _external=True),
     }
     return jsonify(data_result), 201
