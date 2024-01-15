@@ -7,5 +7,7 @@
  exclude = 
     tests
     migrations
+    venv
+    postman_collection
  per-file-ignores =
     __init__.py: F401, E402
