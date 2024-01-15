@@ -92,7 +92,7 @@ Status code: 404
 
 ##### Запрос на создание новой короткой ссылки 
 ```
-GET http://localhost/api/id/
+POST http://localhost/api/id/
 ```
 Данные:
 ```json
