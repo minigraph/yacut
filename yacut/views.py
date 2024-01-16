@@ -1,12 +1,12 @@
-from random import choice
 import re
+from http import HTTPStatus
+from random import choice
 
 from flask import flash, redirect, render_template
 
 from . import app, db
 from .forms import LinkForm
 from .models import URLMap
-
 
 CHARS: str = 'abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 LENGTH_SHORT: int = 6
@@ -18,8 +18,7 @@ def get_unique_short_id():
     short_unique = ''
     while not (len(short_unique) > 0
                and not URLMap.query.filter_by(short=short_unique).first()):
-        for i in range(LENGTH_SHORT):
-            short_unique += choice(CHARS)
+        short_unique = ''.join([choice(CHARS) for i in range(LENGTH_SHORT)])
     return short_unique
 
 
@@ -62,4 +61,4 @@ def index_view():
 @app.route('/<string:short>')
 def link_view(short):
     url_map = URLMap.query.filter_by(short=short).first_or_404()
-    return redirect(url_map.original, code=302)
+    return redirect(url_map.original, code=HTTPStatus.FOUND)
