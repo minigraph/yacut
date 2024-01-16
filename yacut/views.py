@@ -1,7 +1,7 @@
 from random import choice
 import re
 
-from flask import abort, flash, redirect, render_template
+from flask import flash, redirect, render_template
 
 from . import app, db
 from .forms import LinkForm
@@ -61,7 +61,5 @@ def index_view():
 
 @app.route('/<string:short>')
 def link_view(short):
-    url_map = URLMap.query.filter_by(short=short).first()
-    if url_map is None:
-        abort(404)
+    url_map = URLMap.query.filter_by(short=short).first_or_404()
     return redirect(url_map.original, code=302)
